@@ -465,5 +465,32 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission> 
+    <!-- ros2_control: what can be commanded and measured -->
+  <xacro:macro name="arm_joint" params="name">
+    <joint name="${name}">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </xacro:macro>
+
+  <ros2_control name="so101_system" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <xacro:arm_joint name="shoulder_pan"/>
+    <xacro:arm_joint name="shoulder_lift"/>
+    <xacro:arm_joint name="elbow_flex"/>
+    <xacro:arm_joint name="wrist_flex"/>
+    <xacro:arm_joint name="wrist_roll"/>
+    <xacro:arm_joint name="gripper"/>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system"
+            name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find arm_description)/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
 
 </robot>
