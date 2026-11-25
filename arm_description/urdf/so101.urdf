@@ -10,6 +10,13 @@
   <material name="sts3215">
     <color rgba="0.1 0.1 0.1 1.0"/>
   </material>
+    <!-- Dummy root link (KDL cannot have inertia on the root) -->
+  <link name="base"/>
+  <joint name="base_to_base_link" type="fixed">
+    <parent link="base"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
 
   <!-- Link base -->
   <link name="base_link">
